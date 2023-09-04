@@ -39,7 +39,7 @@ def signup(request):
         email_subject = "GadgetBazar Registration Confirmation"
         email_message = render_to_string('activate.html',{
             'user': user,
-            'domain' : 'gadgetbazar.vercel.app',
+            'domain' : 'gadgetbazar.onrender.com',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token' :  generate_token.make_token(user),
         })
@@ -111,7 +111,7 @@ class RequestResetEmailView(View):
             # current_site=get_current_site(request)
             email_subject='Reset Your Password - GadgetBazar'
             message=render_to_string('ResetUserPassword.html',{
-                'domain':'127.0.0.1:8000',
+                'domain':'gadgetbazar.onrender.com',
                 'uid':urlsafe_base64_encode(force_bytes(user[0].pk)),
                 'token':PasswordResetTokenGenerator().make_token(user[0])
             })
