@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-p0$j$jp5srh384p+3ihxd&3l5mvmv&!k^6x8#j0677jsr2p-&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['gadgetbazar.onrender.com','127.0.0.1','localhost']
 
@@ -85,7 +85,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
+#internal
+# DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
+#external
+DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a.oregon-postgres.render.com/ecommerce_ew39")
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -136,7 +139,7 @@ EMAIL_HOST_PASSWORD = "kcanlwngsmjjlfbt"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 import os
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 
