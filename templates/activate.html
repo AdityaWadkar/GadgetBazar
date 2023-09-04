@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Hi {{user.fname}}
+
+Congratulations! You have been registered successfully on GadgetBazar!!
+
+Please click the link below to activate your account:
+
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}
