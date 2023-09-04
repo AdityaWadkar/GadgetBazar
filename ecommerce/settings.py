@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-p0$j$jp5srh384p+3ihxd&3l5mvmv&!k^6x8#j0677jsr2p-&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['gadgetbazar.onrender.com','127.0.0.1','localhost']
 
@@ -89,7 +89,7 @@ DATABASES = {
 }
 # internal
 DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
-# #external
+# # external
 # DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a.oregon-postgres.render.com/ecommerce_ew39")
 
 # Password validation
