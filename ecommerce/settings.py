@@ -140,14 +140,11 @@ EMAIL_HOST_PASSWORD = "kcanlwngsmjjlfbt"
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 import os
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 MEDIA_URL = '/media/'
