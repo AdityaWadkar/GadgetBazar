@@ -81,16 +81,28 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# internal
-DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+# # internal
+# DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
 # #external
 # DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a.oregon-postgres.render.com/ecommerce_ew39")
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'NWI52XGyf8vejT4uwGt3',
+        'HOST': 'containers-us-west-43.railway.app',
+        'PORT': '7420',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
