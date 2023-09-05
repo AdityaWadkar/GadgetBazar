@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-p0$j$jp5srh384p+3ihxd&3l5mvmv&!k^6x8#j0677jsr2p-&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['gadgetbazar.onrender.com','127.0.0.1','localhost']
 
@@ -154,15 +154,32 @@ EMAIL_HOST_PASSWORD = "kcanlwngsmjjlfbt"
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 import os
-STATIC_URL = '/static/'
+#old way
+# STATIC_URL = '/static/'
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+
+
+#new way
+if(DEBUG==True):
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/static/media/'
+    STATICFILES_DIRS=[
+         os.path.join(BASE_DIR,'static')
+    ]
+    STATIC_ROOT='/home/username/websitedomain/static'
+    MEDIA_ROOT='/home/username/websitedomain/static/media'
+else:
+    STATIC_URL = '/static/'
+    MEDIA_URL='static/media/'
+    STATIC_ROOT=os.path.join(BASE_DIR,'static')
+    MEDIA_ROOT=os.path.join(BASE_DIR,'static/media/')
 
 
 MID="rzp_test_2jda5GlsWppBFV"
