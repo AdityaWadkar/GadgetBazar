@@ -148,8 +148,6 @@ EMAIL_HOST_USER = "wadkaraditya824@gmail.com"
 EMAIL_HOST_PASSWORD = "kcanlwngsmjjlfbt"
 
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
