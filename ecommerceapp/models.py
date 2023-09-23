@@ -5,7 +5,7 @@ class Contact(models.Model):
     name=models.CharField(max_length=50)
     email=models.EmailField()
     description=models.TextField(max_length=500)
-    number=models.IntegerField()
+    number=models.CharField(max_length=15)
 
     def __str__(self) -> str:
         return self.name
@@ -28,7 +28,7 @@ class Orders(models.Model):
     fname = models.CharField(max_length=50)
     lname = models.CharField(max_length=50,default="")
     amount =models.IntegerField(default=0)
-    mobile_no = models.CharField(max_length=50)
+    mobile_no = models.CharField(max_length=15)
     pin_code = models.CharField(max_length=100)
     email = models.CharField(max_length=50)
     address1 = models.CharField(max_length=150)

@@ -12,7 +12,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from django.contrib import messages
-import dj_database_url
+import gspread
+from google.auth import credentials
+from oauth2client.service_account import ServiceAccountCredentials
+import pandas as pd
+import os
+# import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p0$j$jp5srh384p+3ihxd&3l5mvmv&!k^6x8#j0677jsr2p-&6'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG","False").lower() == ' "true'
 
 ALLOWED_HOSTS = ['gadgetbazar.onrender.com','127.0.0.1','localhost']
 
@@ -97,10 +102,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'NWI52XGyf8vejT4uwGt3',
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
         'HOST': 'containers-us-west-43.railway.app',
-        'PORT': '7420',
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
@@ -139,13 +144,26 @@ USE_TZ = True
 
 # Sending emails
 
+scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("staticfiles/admin/birthday.json",scope)
+client = gspread.authorize(creds)
+sheet = client.open("birthday").sheet1
+data = sheet.get_all_records()
+df = pd.DataFrame.from_dict(data)
+
+sheet_cred = client.open("birthday").worksheet('credentials')
+
+data = sheet_cred.batch_get(['A1', 'A2','A3'])
+GMAIL_ID  = data[0][0][0]
+GMAIL_PSD = data[1][0][0]
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "wadkaraditya824@gmail.com"
-EMAIL_HOST_PASSWORD = "kcanlwngsmjjlfbt"
+EMAIL_HOST_USER = GMAIL_ID
+EMAIL_HOST_PASSWORD = GMAIL_PSD
 
 
 # Static files (CSS, JavaScript, Images)
