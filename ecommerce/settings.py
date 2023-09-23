@@ -93,9 +93,9 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 #     }
 # }
 # # internal
-# DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a/ecommerce_ew39")
+# DATABASES['default'] = dj_database_url.parse("internal_URL")
 # #external
-# DATABASES['default'] = dj_database_url.parse("postgres://ecommerce_ew39_user:AquJxYJc5r0IOpSba1Si32Sr6JLRcQjW@dpg-cjqabv61208c739tascg-a.oregon-postgres.render.com/ecommerce_ew39")
+# DATABASES['default'] = dj_database_url.parse("External_URL")
 
 
 DATABASES = {
