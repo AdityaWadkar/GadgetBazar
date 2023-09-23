@@ -44,7 +44,7 @@ Whether you're a gadget guru or simply looking for the perfect gift, Gadgetbazar
 ## 🔴 Video Demo!
 Project demo :- [Click Here](https://youtu.be/1ewz6g85a7w)
 
-<img src="https://github.com/AdityaWadkar/GadgetBazar/assets/67093170/bde279b4-82fc-4b46-860c-7874126d2b18">
+<img src="https://github.com/AdityaWadkar/GadgetBazar/assets/67093170/972222e3-86c8-4aea-b82b-30b8bbde220a">
 
 
 ## Authors
