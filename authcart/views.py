@@ -27,14 +27,14 @@ def signup(request):
             return render(request,'signup.html')
         try:
             if User.objects.get(username=email):
-                 messages.info("User Already Exist. Please register using another email")
+                 messages.info(request,"User Already Exist. Please register using another email")
                  return render(request,'signup.html')
                 
         except Exception as identifier:
             pass
         user = User.objects.create_user(email,email,pass1,first_name=fname,last_name=lname)
         user.is_active=False
-        # user.save()
+        user.save()
         
         email_subject = "GadgetBazar Registration Confirmation"
         email_message = render_to_string('activate.html',{
@@ -47,7 +47,7 @@ def signup(request):
         send_mail(
             email_subject,
             email_message,
-            settings.EMAIL_HOST_USER,
+            "GadgetBazar",
             [email],
         )
         
@@ -65,7 +65,7 @@ class ActivateAccountView(View):
             user=User.objects.get(pk=uid)
         except Exception as identifier:
             user=None
-        if user is not None:# and generate_token.check_token(user,token):
+        if user is not None and generate_token.check_token(user,token):
             user.is_active=True
             user.save()
             messages.info(request,"Account Activated Successfully")
@@ -100,32 +100,34 @@ def logout_user(request):
 
 class RequestResetEmailView(View):
     def get(self,request):
-        print("int gate function")
-        return render(request,'RequestResetEmail.html/')
+        return render(request,'request-reset-email.html')
     
     def post(self,request):
         email=request.POST['email']
         user=User.objects.filter(email=email)
 
         if user.exists():
-            # current_site=get_current_site(request)
-            email_subject='Reset Your Password - GadgetBazar'
-            message=render_to_string('ResetUserPassword.html',{
+            email_subject='Reset Your Password'
+            message=render_to_string('reset-user-password.html',{
                 'domain':'gadgetbazar.onrender.com',
                 'uid':urlsafe_base64_encode(force_bytes(user[0].pk)),
                 'token':PasswordResetTokenGenerator().make_token(user[0])
             })
 
             send_mail(
-            email_subject,
-            message,
-            settings.EMAIL_HOST_USER,
-            [email],
-        )
+                email_subject,
+                message,
+                "GadgetBazar",
+                [email],
+            )
+            # email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[email])
+            # email_message.send()
 
-            messages.info(request,f"WE HAVE SENT YOU AN EMAIL WITH INSTRUCTIONS ON HOW TO RESET THE PASSWORD " )
-            print("reset rlink - ",message)
-            return render(request,'RequestResetEmail.html')
+            messages.info(request,f"WE HAVE SENT YOU AN EMAIL WITH INSTRUCTIONS ON HOW TO RESET THE PASSWORD" )
+            return render(request,'request-reset-email.html')
+        else:
+            messages.info(request,f"Email not Found !! Please give valid email " )
+            return render(request,'request-reset-email.html')
 
 class SetNewPasswordView(View):
     def get(self,request,uidb64,token):
@@ -139,12 +141,12 @@ class SetNewPasswordView(View):
 
             if  not PasswordResetTokenGenerator().check_token(user,token):
                 messages.warning(request,"Password Reset Link is Invalid")
-                return render(request,'RequestResetEmail.html')
+                return render(request,'request-reset-email.html')
 
         except DjangoUnicodeDecodeError as identifier:
             pass
 
-        return render(request,'SetNewPassword.html',context)
+        return render(request,'set-new-password.html',context)
 
     def post(self,request,uidb64,token):
         context={
@@ -155,7 +157,7 @@ class SetNewPasswordView(View):
         confirm_password=request.POST['pass2']
         if password!=confirm_password:
             messages.warning(request,"Password is Not Matching")
-            return render(request,'SetNewPassword.html',context)
+            return render(request,'set-new-password.html',context)
         
         try:
             user_id=force_text(urlsafe_base64_decode(uidb64))
@@ -166,7 +168,7 @@ class SetNewPasswordView(View):
             return redirect('/auth/login/')
 
         except DjangoUnicodeDecodeError as identifier:
-            # messages.error(request,"Something Went Wrong")
-            return render(request,'SetNewPassword.html',context)
+            messages.error(request,"Something Went Wrong")
+            return render(request,'set-new-password.html',context)
 
-        return render(request,'SetNewPassword.html',context)
+        return render(request,'set-new-password.html',context)

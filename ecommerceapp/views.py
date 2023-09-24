@@ -27,6 +27,8 @@ def about(request):
 
 
 def contact(request):
+    if not request.user.is_authenticated:
+        return redirect('/auth/login')
     if request.method=="POST":
         name = request.POST["name"]
         email = request.POST["email"]
@@ -42,97 +44,10 @@ def contact(request):
 def checkout(request):
     if not request.user.is_authenticated:
         return redirect('/auth/login')
-    # if request.method=="POST":
-        # print("#####################in post section")
-        # item_json = request.POST["itemsJson"]
-        # fname = request.POST["fname"]
-        # lname = request.POST["lname"]
-        # amount = request.POST["amt"]
-        # mobile_no = request.POST["phone"]
-        # pin_code = request.POST["zip_code"]
-        # email = request.POST["email"]
-        # address1 = request.POST["address1"]
-        # address2 = request.POST["address2"]
-        # landmark = request.POST["landmark"]
-        # city = request.POST["city"]
-        # state = request.POST["state"]
-        # Order = Orders(item_json=item_json,fname = fname,lname = lname,amount=amount,mobile_no=mobile_no,
-        #                pin_code=pin_code,email=email,address1=address1,address2=address2,
-        #                landmark=landmark,city=city,state=state)
-        # # Order.save()
-        # update =OrderUpdate(order_id=Order.order_id,update_desc = "your order has been placed")
-
-        # # update.save()
-        # thank = True
-        
-        ## payment integration
-        # id = Order.order_id
-        # oid = str(id)+"gadgetbazar"
-        # param_dict  = {
-
-        #     'mid' : settings.MID,
-        #     'ORDER_ID'  : oid,
-        #     'TXN_AMOUNT' : str(amount),
-        #     'CUST_ID' : email,
-        #     'INDUXTRY_TYPE_ID' : 'Retail',
-        #     'WEBSITE':'WEBSTAGING',
-        #     'CHANNEL_ID':'WEB',
-        #     'CHANNEL_URL':'http://127.0.0.1/handlerequest/',
-        # }
-
-        # param_dict['CHECKSUM'] = Checksum.generate_checksum
-        # (param_dict,settings.MK)
-        # return render(request,'paytm.html',{'param_dict':param_dict})
-        
-        # client = razorpay.Client(auth=(settings.MID, settings.MK))   
     
-        # payment = client.order.create(
-        #     {'amount':int(amount)*100,
-        #         'currency':"INR",
-        #         'payment_capture':"1",
-        #         })
-        # print(f"************ {payment} *******")
-        # # Order.razor_pay_order_id=payment['id']
-        # # Order.save()
-        # context = {'amount': amount,
-        #            'api_key': settings.MID,
-        #            'order_id': payment['id'],
-        #            'name': fname+" "+lname,
-        #            'email': email,
-        #            'mobile':mobile_no,
-        #            }
-        # return render(request,'success.html',context)
     return render(request,"checkout.html")
 
-@csrf_exempt
-def handlerequest(request):
-    # form = request.POST
-    # response_dict = {}
-    # for i in form.keys():
-    #     response_dict[i] =form[i]
-    #     if i=='CHECKSUMHASH':
-    #         checksum = form[i]
-    # verify = Checksum.verify_checksum(response_dict,settings.MK,checksum)
-    # if verify:
-    #     if response_dict['RESPCODE'] == '01':
-    #         print('order successful')
-    #         a=response_dict['ORDERID']
-    #         b=response_dict['TXNAMOUNT']
-    #         rid=a.replace('gadgetbazar','')
-    #         print(rid)
-    #         filter2 = Orders.objects.filter(order_id=rid)
-    #         print(filter2)
-    #         print(a,b)
-    #         for post1 in filter2:
-    #             post1.id=a
-    #             post1.amountpaid=b
-    #             post1.paymentstatus="PAID"
-    #             post1.save()
-    #         print("run ageda function")
-    #     else:
-    #         print("order was not successful because"+response_dict['RESPMSG'])
 
-    pass
 @csrf_exempt
 def success(request):
     if request.method=="POST":
